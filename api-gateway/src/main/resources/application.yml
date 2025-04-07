@@ -1,0 +1,29 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: API-GATEWAY
+  config:
+    import: configserver:${CONFIG_SERVER_URL:http://localhost:9296}
+  cloud:
+    gateway:
+      routes:
+        - id: COUPON-SERVICE
+          uri: lb://COUPON-SERVICE
+          predicates:
+            - Path=/coupon/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: COUPON-SERVICE
+                fallbackuri: forward:/couponServiceFallBack
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 1
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
