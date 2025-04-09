@@ -3,34 +3,24 @@ server:
 
 
 spring:
-#  jpa:
-#    database: POSTGRESQL
-#    show-sql: true
-#    hibernate:
-#      ddl-auto: update
-#  datasource:
-#    url: jdbc:postgresql://${DB_HOST:localhost}:5433/order-db
-#    username: postgres
-#    password: admin
-#    driverClassName: org.postgresql.Driver
   application:
     name: COUPON-SERVICE
   config:
     import: configserver:${CONFIG_SERVER_URL:http://localhost:9296}
 
-#resilience4j:
-#  circuitbreaker:
-#    instances:
-#      external:
-#        event-consumer-buffer-size: 10
-#        failure-rate-threshold: 50
-#        minimum-number-of-calls: 5
-#        automatic-transition-from-open-to-half-open-enabled: true
-#        wait-duration-in-open-state:
-#          seconds: 5
-#        permitted-number-of-calls-in-half-open-state: 3
-#        sliding-window-size: 10
-#        sliding-window-type: COUNT_BASED
+resilience4j:
+  circuitbreaker:
+    instances:
+      external:
+        event-consumer-buffer-size: 10
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+        wait-duration-in-open-state:
+          seconds: 5
+        permitted-number-of-calls-in-half-open-state: 3
+        sliding-window-size: 10
+        sliding-window-type: COUNT_BASED
 
 
 
@@ -38,3 +28,10 @@ management:
   tracing:
     sampling:
       probability: 1.0
+
+meli:
+  client-id: ${MELI_CLIENT_ID:3755041179926330}
+  client-secret: ${MELI_CLIENT_SECRET:ciwie6JXlq9iMidcOP8MHFwzqL2RsRgd}
+  redirect-uri: ${MELI_REDIRECT_URI:https://www.testapp.com}
+  code: ${MELI_AUTHORIZATION_CODE:TG-67f59da41190b90001756a69-32729035}
+  code-verifier: ${MELI_CODE_VERIFIER:}
