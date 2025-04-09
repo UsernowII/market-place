@@ -1,34 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: coupon-depl
+  name: stats-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: coupon
+      app: stats
   template:
     metadata:
       labels:
-        app: coupon
+        app: stats
     spec:
       containers:
-      - name: coupon
-        image: usernow/coupon-service:latest
+      - name: stats
+        image: usernow/stats-service:latest
         ports:
-        - containerPort: 8082
+        - containerPort: 8081
         env:
           - name: CONFIG_SERVER_URL
             valueFrom:
               configMapKeyRef:
                 name: config-cm
                 key: config_url
-          - name: DB_HOST
-            value: postgres-srv
-          - name: SPRING_DATASOURCE_USERNAME
-            value: postgres
-          - name: SPRING_DATASOURCE_PASSWORD
-            value: admin
         resources:
             requests:
               memory: "128Mi"
@@ -37,6 +31,8 @@ spec:
               memory: "512Mi"
               cpu: "500m"
         
+                
+
 ---
 
 apiVersion: v1
@@ -51,4 +47,4 @@ spec:
     - name: client
       protocol: TCP
       port: 80
-      targetPort: 8082
+      targetPort: 8081

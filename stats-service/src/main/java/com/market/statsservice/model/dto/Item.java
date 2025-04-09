@@ -1,15 +1,13 @@
 package com.market.statsservice.model.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
-@Builder
-@Getter
-@Setter
-public class ItemRequest {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Item {
 
     private String id;
     private String title;

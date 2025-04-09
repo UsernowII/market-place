@@ -1,7 +1,6 @@
 package com.market.couponservice.service;
 
 import com.market.couponservice.external.client.interfaces.ExternalItemClient;
-import com.market.couponservice.external.client.interfaces.StatsService;
 import com.market.couponservice.external.response.ItemResponse;
 import com.market.couponservice.model.dto.CouponRequest;
 import com.market.couponservice.model.dto.CouponResponse;
@@ -14,7 +13,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +20,7 @@ import java.util.stream.Collectors;
 public class CouponServiceImpl implements CouponService{
 
     private final ExternalItemClient client;
-    private final StatsService statsService;
+    private final EventPublisher<List<Item>> couponProducer;
 
 
     @Override
@@ -34,9 +32,9 @@ public class CouponServiceImpl implements CouponService{
                         .toList()
         ).stream()
          .sorted(Comparator.comparing(ItemResponse::getPrice))
-         .collect(Collectors.toList());
+         .toList();
 
-        log.info(items);
+        log.info("Items from request: " + items.size());
 
         BigDecimal total = BigDecimal.ZERO;
         List<Item> selectedItems = new ArrayList<>();
@@ -56,10 +54,8 @@ public class CouponServiceImpl implements CouponService{
                 );
             }
         }
-
-
-        //TODO: handle with queues [kafka , SQS...]
-        //statsService.redeemed(selectedItems);
+        log.info("items valid for redemption: " + items.size());
+        couponProducer.publish(selectedItems);
 
         return CouponResponse.builder()
                 .item_ids(selectedItems)

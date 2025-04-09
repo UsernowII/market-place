@@ -1,6 +1,6 @@
 package com.market.statsservice.controller;
 
-import com.market.statsservice.model.dto.ItemRequest;
+import com.market.couponservice.model.dto.Item;
 import com.market.statsservice.service.StatsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -29,7 +29,7 @@ public class StatsController {
     }
 
     @PostMapping("/redeemed")
-    public ResponseEntity<Void> redeemItems(@RequestBody List<ItemRequest> items) {
+    public ResponseEntity<Void> redeemItems(@RequestBody List<Item> items) {
         statsService.registerRedeemedItems(items);
         return ResponseEntity.ok().build();
     }

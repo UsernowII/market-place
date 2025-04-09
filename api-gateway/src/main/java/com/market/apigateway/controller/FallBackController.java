@@ -11,4 +11,9 @@ public class FallBackController {
         return "Coupon Service is down";
     }
 
+    @GetMapping("/statsServiceFallBack")
+    public String statsServiceFallback () {
+        return "Stats Service is down";
+    }
+
 }

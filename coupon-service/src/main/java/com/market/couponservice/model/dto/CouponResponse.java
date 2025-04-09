@@ -1,6 +1,5 @@
 package com.market.couponservice.model.dto;
 
-import com.market.couponservice.external.response.ItemResponse;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -1,7 +1,7 @@
 package com.market.statsservice.service;
 
 import com.market.statsservice.mapper.ItemMapper;
-import com.market.statsservice.model.dto.ItemRequest;
+import com.market.couponservice.model.dto.Item;
 import com.market.statsservice.repository.StatsRepository;
 import com.market.statsservice.model.entity.ItemStat;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +24,9 @@ public class StatsServiceImpl implements StatsService {
     private final ItemMapper itemMapper;
 
     @Override
-    public void registerRedeemedItems(List<ItemRequest> items) {
+    public void registerRedeemedItems(List<Item> items) {
         List<String> itemIds = items.stream()
-                .map(ItemRequest::getId)
+                .map(Item::getId)
                 .toList();
 
         Map<String, ItemStat> existingItems =

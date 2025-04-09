@@ -1,15 +1,14 @@
 package com.market.couponservice.model.dto;
 
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
-@Builder
 @Getter
+@Setter
+@RequiredArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Item {
 
     private String id;

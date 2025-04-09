@@ -23,6 +23,20 @@ spring:
                 redis-rate-limiter.replenishRate: 1
                 redis-rate-limiter.burstCapacity: 1
 
+        - id: STATS-SERVICE
+          uri: lb://STATS-SERVICE
+          predicates:
+            - Path=/stats/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: STATS-SERVICE
+                fallbackuri: forward:/statsServiceFallBack
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 1
+
 management:
   tracing:
     sampling:
