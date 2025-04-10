@@ -55,6 +55,7 @@ etc...
 
 Desde el IDE solo debes ir a la clase Main de cada srvicio y ejecutar RUN
 
+
 ## 🚀 Flujo del Sistema
 
 1. 🛒 **Aplicar un cupon:** Recibida una lista de items el sistema buscara los detalles de los items correspondientes haciendo una llamada a otro servicio "externo"
@@ -81,3 +82,5 @@ Desde el IDE solo debes ir a la clase Main de cada srvicio y ejecutar RUN
 - PostgreSQL
 - Kafka
 - **Microservicios**
+
+![Diagrma Arquitectura Alto nivel](Diagrama-arq.png)
