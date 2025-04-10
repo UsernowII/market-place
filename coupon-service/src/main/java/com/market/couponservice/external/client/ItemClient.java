@@ -7,6 +7,7 @@ import com.market.couponservice.external.response.ItemResponse;
 import com.market.couponservice.external.response.ItemWrapper;
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class ItemClient implements ExternalItemClient {
     private final RestTemplate restTemplate;
     private final TokenManagerService tokenManagerService;
@@ -51,7 +53,7 @@ public class ItemClient implements ExternalItemClient {
 //                .map(ItemWrapper::getBody)
 //                .filter(item -> item.getPrice() != null)
 //                .collect(Collectors.toList());
-
+        log.debug(response);
 
         List<ItemResponse> items = Arrays.stream(response.getBody())
                 .filter(i -> i.getCode() == 200)

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -27,4 +28,14 @@ public class TokenResponse {
 
     @JsonProperty("user_id")
     private long userId;
+
+    @Override
+    public String toString() {
+        return "TokenResponse{" +
+                "accessToken='" + accessToken + '\'' +
+                ", refreshToken='" + refreshToken + '\'' +
+                ", expiresIn=" + expiresIn +
+                ", tokenType='" + tokenType + '\'' +
+                '}';
+    }
 }

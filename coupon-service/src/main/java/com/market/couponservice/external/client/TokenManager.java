@@ -17,16 +17,18 @@ public class TokenManager implements TokenManagerService {
     private final AuthService authService;
     private String accessToken = "APP_USR-3755041179926330-040915-5ece9b375c6ebd874999b97dd54fcc41-32729035";
     private String refreshToken = "TG-67f6cb548905050001d12fda-32729035";
-    private long tokenExpirationTime;
+    private long tokenExpirationTime = 21000;
 
     @Override
     public synchronized String getAccessToken() {
         if (accessToken == null ) {
             TokenResponse response = authService.authenticate();
+            log.info("Generate access token: {}", response);
             setTokens(response);
         }
         if ( System.currentTimeMillis() >= tokenExpirationTime) {
             TokenResponse response = authService.refreshToken(refreshToken);
+            log.info("Generate refresh token: {}", response);
             setTokens(response);
         }
         return accessToken;
@@ -37,6 +39,6 @@ public class TokenManager implements TokenManagerService {
         this.accessToken = tokenData.getAccessToken();
         this.refreshToken = tokenData.getRefreshToken();
         this.tokenExpirationTime = System.currentTimeMillis() + (tokenData.getExpiresIn() - 60) * 1000L;
-        log.info("Token set Expiration time: " + tokenExpirationTime);
+        log.info("Token set Expiration time: {}", tokenExpirationTime);
     }
 }
