@@ -15,10 +15,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.math.BigDecimal;
+//import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
+//import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,35 +47,38 @@ public class ItemClient implements ExternalItemClient {
                 ItemWrapper[].class
         );
 
+        Arrays.stream(response.getBody()).forEach(res -> log.info("Item response: {}", res));
 
-        //        return Arrays.stream(response.getBody())
+        return Arrays.stream(response.getBody())
+            .filter(i -> i.getCode() == 200)
+            .map(ItemWrapper::getBody)
+            .filter(item -> item.getPrice() != null)
+            .collect(Collectors.toList());
+
+
+        /* MOCK FOR TESTING PURPOSE */
+
+//        List<ItemResponse> items = Arrays.stream(response.getBody())
 //                .filter(i -> i.getCode() == 200)
 //                .map(ItemWrapper::getBody)
 //                .filter(item -> item.getPrice() != null)
 //                .collect(Collectors.toList());
-        log.debug(response);
-
-        List<ItemResponse> items = Arrays.stream(response.getBody())
-                .filter(i -> i.getCode() == 200)
-                .map(ItemWrapper::getBody)
-                .filter(item -> item.getPrice() != null)
-                .collect(Collectors.toList());
-
-        if (items.isEmpty()) {
-            items = itemIds
-                    .stream()
-                    .map(id -> ItemResponse.builder()
-                            .id(id)
-                            .title("Mocked Item")
-                            .price(BigDecimal.valueOf(ThreadLocalRandom.current().nextInt(10, 101)))
-                            .siteId("MCO")
-                            .currencyId("COL")
-                            .build())
-                    .collect(Collectors.toList());
-
-        }
-
-        return items;
+//
+//        if (items.isEmpty()) {
+//            items = itemIds
+//                    .stream()
+//                    .map(id -> ItemResponse.builder()
+//                            .id(id)
+//                            .title("Mocked Item")
+//                            .price(BigDecimal.valueOf(ThreadLocalRandom.current().nextInt(10, 101)))
+//                            .siteId("MCO")
+//                            .currencyId("COL")
+//                            .build())
+//                    .collect(Collectors.toList());
+//
+//        }
+//
+//        return items;
     }
 
 }

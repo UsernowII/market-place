@@ -20,7 +20,7 @@ public class StatsController {
 
     @GetMapping
     public String healthCheck() {
-        return "OK";
+        return "OK STATS";
     }
 
     @GetMapping("/top-redeemed")

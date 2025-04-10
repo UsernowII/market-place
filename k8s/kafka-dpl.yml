@@ -19,11 +19,9 @@ spec:
             - containerPort: 9092
           env:
             - name: KAFKA_CFG_PROCESS_ROLES
-              value: "controller,broker" # Define los roles del proceso
+              value: "controller,broker"
             - name: KAFKA_CFG_NODE_ID
-              value: "0" # ID único del nodo
-            - name: KAFKA_CFG_LISTENERS
-              value: PLAINTEXT://0.0.0.0:9092
+              value: "0"
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
               value: PLAINTEXT://kafka-srv:9092
             - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
@@ -34,8 +32,6 @@ spec:
               value: "yes"
             - name: KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE
               value: "true"
-            - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
-              value: CONTROLLER
             - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
               value: CONTROLLER
             - name: KAFKA_CFG_LISTENERS

@@ -1,35 +1,15 @@
 version: '3'
 services:
-  # serviceregistry:
-  #   image: 'usernow/service-registry:0.0.1'
-  #   container_name: serviceregistry
-  #   ports:
-  #     - '8761:8761'
-  # configserver:
-  #   image: 'usernow/config-server:0.0.1'
-  #   container_name: configserver
-  #   ports:
-  #     - '9296:9296'
-  #   environment:
-  #     - EUREKA_SERVER_ADDRESS=http://serviceregistry:8761/eureka
-  #   healthcheck:
-  #     test: ["CMD", "curl", "-f", "http://configserver:9296/actuator/health"]
-  #     interval: 10s
-  #     timeout: 5s
-  #     retries: 5
-  #   depends_on:
-  #     - serviceregistry
-  # cloudgateway:
-  #   image: 'usernow/api-gateway:latest'
-  #   container_name: cloudgateway
-  #   ports:
-  #     - '9090:9090'
-  #   environment:
-  #     - EUREKA_SERVER_ADDRESS=http://serviceregistry:8761/eureka
-  #     - CONFIG_SERVER_URL=http://configserver:9296/
-  #   depends_on:
-  #     configserver:
-  #       condition: service_healthy
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+  zipkin:
+    image: openzipkin/zipkin:latest
+    ports:
+      - "9411:9411"
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.2.1
@@ -52,3 +32,24 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: couponDB
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d couponDB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

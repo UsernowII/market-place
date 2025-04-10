@@ -20,7 +20,7 @@ public class CouponController {
 
     @GetMapping
     public String healthCheck() {
-       return "OK";
+       return "OK COUPON";
     }
 
     @PostMapping("/apply")

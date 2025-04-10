@@ -7,6 +7,7 @@ import com.market.couponservice.external.response.TokenResponse;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,9 +16,11 @@ import org.springframework.stereotype.Service;
 public class TokenManager implements TokenManagerService {
 
     private final AuthService authService;
-    private String accessToken = "APP_USR-3755041179926330-040915-5ece9b375c6ebd874999b97dd54fcc41-32729035";
-    private String refreshToken = "TG-67f6cb548905050001d12fda-32729035";
-    private long tokenExpirationTime = 21000;
+    @Value("${meli.access-token}")
+    private String accessToken;
+    @Value("${meli.refresh-token}")
+    private String refreshToken;
+    private long tokenExpirationTime = 0;
 
     @Override
     public synchronized String getAccessToken() {
