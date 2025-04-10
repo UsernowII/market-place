@@ -23,32 +23,28 @@ spec:
               configMapKeyRef:
                 name: config-cm
                 key: config_url
-          - name: DB_HOST
-            value: postgres-srv
-          - name: SPRING_DATASOURCE_USERNAME
-            value: postgres
-          - name: SPRING_DATASOURCE_PASSWORD
-            value: admin
+          - name: KAFKA_BROKERS
+            value: "kafka-srv"
         resources:
             requests:
               memory: "128Mi"
               cpu: "250m"
             limits:
               memory: "512Mi"
-              cpu: "500m"
+              cpu: "250m"
         
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: client-srv
+  name: coupon-srv
 spec:
   type: ClusterIP
   selector:
-    app: client
+    app: coupon
   ports:
-    - name: client
+    - name: coupon
       protocol: TCP
       port: 80
       targetPort: 8082

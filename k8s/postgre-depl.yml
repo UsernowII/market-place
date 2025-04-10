@@ -12,6 +12,13 @@ spec:
       labels:
         app: postgres
     spec:
+      initContainers:
+        - name: init-postgres
+          image: busybox:latest
+          command: ['sh', '-c', 'rm -rf /var/lib/postgresql/data/*']
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data/
       containers:
         - name: postgres
           image: postgres:14
@@ -19,16 +26,19 @@ spec:
             - name: POSTGRES_USER
               value: postgres
             - name: POSTGRES_PASSWORD
-              value: postgres
+              value: admin
           ports:
             - containerPort: 5432
           volumeMounts:
             - name: init-db
-              mountPath: /docker-entrypoint-initdb.d
+              mountPath: /docker-entrypoint-initdb.d/
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data/
       volumes:
         - name: init-db
           configMap:
             name: postgres-init-cm
+          
 ---
 apiVersion: v1
 kind: Service
