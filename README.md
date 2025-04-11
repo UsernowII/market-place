@@ -69,11 +69,16 @@ Desde el IDE solo debes ir a la clase Main de cada srvicio y ejecutar RUN
 ## BASE URL
 ### [http://localhost:9090]
 
+## BASE URL PRODUCCION
+### [http://www.usernow.lat/]
+
 | Servicio          | Método | Endpoint |
 |------------------|--------|------------------------------------------------|
 | **coupon**       | `POST`  | `/coupon/apply` |
 | **stats**        | `GET`  | `/stats/top-redeemed` |
 
+Endpoint auxiliar para redimir productos sin enviar eventos de kafka
+ **stats**        | `POST`  | `/stats/redeemed` | 
 
 ## 🛠️ Tecnologías Utilizadas
 
@@ -82,5 +87,6 @@ Desde el IDE solo debes ir a la clase Main de cada srvicio y ejecutar RUN
 - PostgreSQL
 - Kafka
 - **Microservicios**
+- Deploy: Cluster kubernetes, Cloud Digital Ocean, ficheros y config en la branch prod
 
 ![Diagrma Arquitectura Alto nivel](Diagrama-arq.png)
