@@ -73,12 +73,18 @@ Desde el IDE solo debes ir a la clase Main de cada srvicio y ejecutar RUN
 ### [http://www.usernow.lat/]
 
 | Servicio          | Método | Endpoint |
-|------------------|--------|------------------------------------------------|
-| **coupon**       | `POST`  | `/coupon/apply` |
+|------------------|--------|-----------------  |
+| **coupon**       | `POST`  | `/coupon/apply`  |
+| **coupon**        | `GET`  | `/coupon/`       |
 | **stats**        | `GET`  | `/stats/top-redeemed` |
+| **stats**        | `GET`  | `/stats/` |
+
 
 Endpoint auxiliar para redimir productos sin enviar eventos de kafka
- **stats**        | `POST`  | `/stats/redeemed` | 
+
+| Servicio          | Método | Endpoint |
+|------------------|--------|------------------------------------------------|
+| **stats**        | `POST`  | `/stats/redeemed` | 
 
 ## 🛠️ Tecnologías Utilizadas
 
