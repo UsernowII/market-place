@@ -27,17 +27,16 @@ spec:
               value: postgres
             - name: POSTGRES_PASSWORD
               value: admin
+            - name: POSTGRES_DB
+              value: couponDB
           ports:
             - containerPort: 5432
           volumeMounts:
-            - name: init-db
-              mountPath: /docker-entrypoint-initdb.d/
             - name: postgres-data
               mountPath: /var/lib/postgresql/data/
       volumes:
-        - name: init-db
-          configMap:
-            name: postgres-init-cm
+        - name: postgres-data
+          emptyDir: {}
           
 ---
 apiVersion: v1
@@ -52,3 +51,15 @@ spec:
       protocol: TCP
       port: 5432
       targetPort: 5432
+
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

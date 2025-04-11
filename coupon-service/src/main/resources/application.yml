@@ -8,10 +8,6 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-  application:
-    name: COUPON-SERVICE
-  config:
-    import: configserver:${CONFIG_SERVER_URL:http://localhost:9296}
 
 resilience4j:
   circuitbreaker:

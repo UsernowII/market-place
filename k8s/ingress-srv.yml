@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: www.usernow.lat
+      http:
+        paths:
+          - path: /stats/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: stats-srv
+                port:
+                  number: 8081
+          - path: /coupon/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: coupon-srv
+                port:
+                  number: 8082

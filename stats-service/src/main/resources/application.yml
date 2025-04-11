@@ -25,10 +25,6 @@ spring:
     username: postgres
     password: admin
     driverClassName: org.postgresql.Driver
-  application:
-    name: STATS-SERVICE
-  config:
-    import: configserver:${CONFIG_SERVER_URL:http://localhost:9296}
 
 resilience4j:
   circuitbreaker:
